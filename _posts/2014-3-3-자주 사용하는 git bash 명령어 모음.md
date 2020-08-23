@@ -1,0 +1,79 @@
+---
+layout: post
+title: You're up and running!
+---
+#### git commit 되돌리기
+
+```python
+git reset --[option] [커밋코드]
+git reset --[option] HEAD~[번호]
+```
+
+* [option]
+  1. hard : 돌아가려는 commit 이후의 내역 모두 삭제(파일 내용까지 되돌려짐)
+  2. mixed : 돌아가려는 commit 이후의 변경 내용은 새로 스테이징 해주어야함
+  3. soft : 돌아가려는 commit 이후의 변경 내용은 스테이징 상태
+
+**예시**  
+이미 remote repository에 push 된 특정 commit 이후의 내역을 지우고 싶다면?
+```python
+git reset --hard [커밋코드]
+git push -f origin master
+```
+
+
+#### 이미 생성된 repository에 새로 gitignore을 적용하기
+
+이 상황은 내가 자주 겪었던 상황인데 AWS DB의 host와 key값을 따로 .txt 파일로 관리하면서 필요할 때마다 코드에서 읽어와서 DB에 접근했었다. 이때 host와 key값은 따로 로컬로 관리를 해야하는데 실수로 gitignore을 설정하기 전에 commit 후 push를 해버려서 host와 key가 그대로 remote repository에 올라간 적이 종종 있었다.
+
+```python
+
+git rm -r --cached . # git이 추적하고 있는 내역 모두 삭제
+vim .gitignore # gitignore 적용할 파일 추가
+
+# a, o i 등을 눌러서 입력 모드 진입
+# 작성 완료 후 esc + :wq 로 입력 종료
+
+git add . # gitignore 적용되어 다시 스테이징
+git commit -am "커밋 메시지"
+git push origin master
+```
+
+
+## local repository를 remote repository의 master 브랜치 기준으로 강제 업데이트하기
+
+여러 PC에서 작업하다보니 master 브랜치가 꼬여서 remote repository를 기준으로 로컬 PC를 강제로 업데이트 해야하는 상황이 종종 있었다.
+
+```python
+git fetch --all
+git reset --hard origin master # 내 로컬의 변경 이력을 모두 무시하고 remote repository에 master 브랜치를 가리키도록 함
+git pull origin master
+```
+
+#### 방치된 master 브랜치를 다른 브랜치로 덮어쓰기
+
+브랜치를 새로 파서 작업하다가 주객이 전도되어 master 브랜치를 다른 브랜치로 덮어써서 병합해야 했던 적이 있었다.
+```python
+git checkout demo # demo 브랜치로 checkout
+git merge -s ours master
+git checkout master
+git merge demo
+```
+
+```fatal:refusing to merge unrelated histories``` 발생 시: 두 번째 line을
+```git merge --allow-unrelated-histories -s ours```
+
+## 브랜치 삭제하기
+```git branch -d [브랜치]```
+
+## git pull 할 때 로컬 파일과 병합 충돌 발생했을 때
+```Your local changes to the following files would be overwritten by merge:```
+
+```
+git stash # 현재 디렉토리의 버전관리 파일을 임시로 백업
+git pull origin master
+git stash pop
+
+# 한번에 하기
+git stash && git pull origin master && git stash pop
+```
