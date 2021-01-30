@@ -1,0 +1,73 @@
+I"�<h4 id="git-commit-되돌리기">git commit 되돌리기</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="p">[</span><span class="n">커밋코드</span><span class="p">]</span>
+<span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="n">HEAD</span><span class="o">~</span><span class="p">[</span><span class="n">번호</span><span class="p">]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>[option]
+    <ol>
+      <li>hard : 돌아가려는 commit 이후의 내역 모두 삭제(파일 내용까지 되돌려짐)</li>
+      <li>mixed : 돌아가려는 commit 이후의 변경 내용은 새로 스테이징 해주어야함</li>
+      <li>soft : 돌아가려는 commit 이후의 변경 내용은 스테이징 상태</li>
+    </ol>
+  </li>
+</ul>
+
+<p><strong>예시</strong><br />
+이미 remote repository에 push 된 특정 commit 이후의 내역을 지우고 싶다면?</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="n">hard</span> <span class="p">[</span><span class="n">커밋코드</span><span class="p">]</span>
+<span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">f</span> <span class="n">origin</span> <span class="n">master</span>
+</code></pre></div></div>
+
+<h4 id="이미-생성된-repository에-새로-gitignore을-적용하기">이미 생성된 repository에 새로 gitignore을 적용하기</h4>
+
+<p>이 상황은 내가 자주 겪었던 상황인데 AWS DB의 host와 key값을 따로 .txt 파일로 관리하면서 필요할 때마다 코드에서 읽어와서 DB에 접근했었다. 이때 host와 key값은 따로 로컬로 관리를 해야하는데 실수로 gitignore을 설정하기 전에 commit 후 push를 해버려서 host와 key가 그대로 remote repository에 올라간 적이 종종 있었다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">git</span> <span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="o">--</span><span class="n">cached</span> <span class="p">.</span> <span class="c1"># git이 추적하고 있는 내역 모두 삭제
+</span><span class="n">vim</span> <span class="p">.</span><span class="n">gitignore</span> <span class="c1"># gitignore 적용할 파일 추가
+</span>
+<span class="c1"># a, o i 등을 눌러서 입력 모드 진입
+# 작성 완료 후 esc + :wq 로 입력 종료
+</span>
+<span class="n">git</span> <span class="n">add</span> <span class="p">.</span> <span class="c1"># gitignore 적용되어 다시 스테이징
+</span><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">am</span> <span class="s">"커밋 메시지"</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
+</code></pre></div></div>
+
+<h2 id="local-repository를-remote-repository의-master-브랜치-기준으로-강제-업데이트하기">local repository를 remote repository의 master 브랜치 기준으로 강제 업데이트하기</h2>
+
+<p>여러 PC에서 작업하다보니 master 브랜치가 꼬여서 remote repository를 기준으로 로컬 PC를 강제로 업데이트 해야하는 상황이 종종 있었다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">fetch</span> <span class="o">--</span><span class="nb">all</span>
+<span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="n">hard</span> <span class="n">origin</span> <span class="n">master</span> <span class="c1"># 내 로컬의 변경 이력을 모두 무시하고 remote repository에 master 브랜치를 가리키도록 함
+</span><span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
+</code></pre></div></div>
+
+<h4 id="방치된-master-브랜치를-다른-브랜치로-덮어쓰기">방치된 master 브랜치를 다른 브랜치로 덮어쓰기</h4>
+
+<p>브랜치를 새로 파서 작업하다가 주객이 전도되어 master 브랜치를 다른 브랜치로 덮어써서 병합해야 했던 적이 있었다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">checkout</span> <span class="n">demo</span> <span class="c1"># demo 브랜치로 checkout
+</span><span class="n">git</span> <span class="n">merge</span> <span class="o">-</span><span class="n">s</span> <span class="n">ours</span> <span class="n">master</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">master</span>
+<span class="n">git</span> <span class="n">merge</span> <span class="n">demo</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">fatal:refusing to merge unrelated histories</code> 발생 시: 두 번째 line을
+<code class="language-plaintext highlighter-rouge">git merge --allow-unrelated-histories -s ours</code></p>
+
+<h2 id="브랜치-삭제하기">브랜치 삭제하기</h2>
+<p><code class="language-plaintext highlighter-rouge">git branch -d [브랜치]</code></p>
+
+<h2 id="git-pull-할-때-로컬-파일과-병합-충돌-발생했을-때">git pull 할 때 로컬 파일과 병합 충돌 발생했을 때</h2>
+<p><code class="language-plaintext highlighter-rouge">Your local changes to the following files would be overwritten by merge:</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git stash # 현재 디렉토리의 버전관리 파일을 임시로 백업
+git pull origin master
+git stash pop
+
+# 한번에 하기
+git stash &amp;&amp; git pull origin master &amp;&amp; git stash pop
+</code></pre></div></div>
+:ET
