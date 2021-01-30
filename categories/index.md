@@ -1,8 +1,15 @@
 
----
+
 layout: default
+
 permalink: '/categories/'
+
 ---
+
+
+
+
+
 <div class="category-wrap">
 {% for list in site.category_list %}
     <h1 class="category-title"><a href="/category/{{ list }}">{{ list | upcase }}</a></h1>
