@@ -1,0 +1,41 @@
+I"q<h2 id="fundamentals-of-power-system-economics">Fundamentals of Power System Economics</h2>
+
+<p>2장:Basic Concepts from Economics</p>
+
+<p>이전 포스트에서는 전력시장의 4가지 모델에 대해 정리했고, 이번에는 consumer modeling을 정리한다!</p>
+
+<h4 id="individual-demand">Individual demand</h4>
+
+<ul>
+  <li>어떤 재화/서비스의 구매량은 현재 가격에 의존함</li>
+  <li>마찬가지로 재화/서비스의 품질에도 의존(non-price characteristics)</li>
+</ul>
+
+<h4 id="surplus">Surplus</h4>
+
+<p><img src="https://cdn.corporatefinanceinstitute.com/assets/consumer-surplus.png" alt="surplus" />{width=50%}</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">willingness to pay(지불 용의)</code>: 소비자가 어떤 재화 한 단위를 추가적으로 구입하기 위해 지불하고자 하는 최고 금액</li>
+  <li><code class="language-plaintext highlighter-rouge">marginal cost(한계 비용)</code>: 생산자가 어떤 물건을 한 단위만큼 공급하기 위해 들여야 하는 최고 비용</li>
+  <li><code class="language-plaintext highlighter-rouge">net consumer's surplus(소비자 지불 잉여)</code>: 소비자 지불 용의의 합에서 실제로 지불한 금액을 뺀 나머지 금액의 크기</li>
+</ul>
+
+<h4 id="demand-and-inverse-demand-functions">Demand and inverse demand functions</h4>
+
+<p><img src="https://www.researchgate.net/profile/Hirbod_Assa/publication/276423901/figure/fig2/AS:667667484639254@1536195741860/The-inverse-demand-curve-for-the-market-without-speculative-activity-solid-line-and.png" alt="inverse demand function" /></p>
+
+<ul>
+  <li>소비자들은 동일한 재화에 대해 지불 용의가 서로 다르다.</li>
+  <li>충분한 소비자의 수요 곡선을 통합하면 매끄러운 형태의 곡선이 됨 -&gt; <code class="language-plaintext highlighter-rouge">inverse demand function</code></li>
+</ul>
+
+<h4 id="elasticity-of-demand">Elasticity of demand</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">price elasticity of demand</code>: 가격 변화에 대한 수요 변화의 비</li>
+</ul>
+
+<p>작성중</p>
+
+:ET
