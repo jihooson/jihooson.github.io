@@ -4,12 +4,12 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+### Information
 
-### More Information
+M.S Candidate at Korea University
 
-A place to include any other types of information that you'd like to include about yourself.
+Majored in Electrical and Electronic Engineering
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[juliason81@gmail.com](mailto:email@domain.com)
